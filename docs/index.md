@@ -6,6 +6,7 @@ Welcome to the documentation for **Cuento**, a modern roleplaying forum platform
 
 - [ADR 001: Custom Fields and Their Types](adr/001-custom-fields.md)
 - [ADR 002: Character Factions](adr/002-factions.md)
+- [ADR 003: Permissions](adr/003-permissions.md)
 
 ## Project Overview
 
