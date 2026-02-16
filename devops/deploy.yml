@@ -1,0 +1,111 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: Install dependencies
+      working-directory: ./frontend
+      run: npm ci
+
+    - name: Build Frontend
+      working-directory: ./frontend
+      run: npm run build -- --configuration production
+
+    - name: Archive Frontend Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: frontend-dist
+        path: frontend/dist/cuento-frontend
+
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+        cache-dependency-path: backend/go.sum
+
+    - name: Build Backend
+      working-directory: ./backend
+      run: go build -v -o cuento-server main.go
+
+    - name: Archive Backend Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: backend-dist
+        path: backend/cuento-server
+
+  deploy:
+    needs: [build-frontend, build-backend]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download Frontend Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: frontend-dist
+        path: frontend-dist
+
+    - name: Download Backend Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: backend-dist
+        path: backend-dist
+
+    - name: Copy Files to Server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        source: "frontend-dist/*,backend-dist/cuento-server"
+        target: "/tmp/cuento-deploy"
+
+    - name: Deploy on Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          # Stop backend service
+          # sudo systemctl stop cuento-backend
+
+          # Deploy Frontend
+          sudo rm -rf /var/www/frontend/*
+          sudo mkdir -p /var/www/frontend
+          sudo cp -r /tmp/cuento-deploy/frontend-dist/* /var/www/frontend/
+
+          # Deploy Backend Binary
+          sudo mkdir -p /var/www/backend
+          sudo cp /tmp/cuento-deploy/backend-dist/cuento-server /var/www/backend/cuento-server
+          sudo chmod +x /var/www/backend/cuento-server
+
+          # Restart backend service
+          # sudo systemctl restart cuento-backend
+          
+          # Reload Caddy if config changed (optional)
+          # sudo systemctl reload caddy
+
+          # Cleanup
+          rm -rf /tmp/cuento-deploy

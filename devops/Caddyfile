@@ -1,0 +1,19 @@
+:80 {
+    # Serve static frontend files
+    handle {
+        root * /var/www/frontend
+        try_files {path} /index.html
+        file_server
+    }
+
+    # Serve backend API
+    handle /api/* {
+        reverse_proxy localhost:8080
+    }
+
+    # Serve backend static files (if any)
+    handle /backend/* {
+        root * /var/www/backend
+        file_server
+    }
+}
