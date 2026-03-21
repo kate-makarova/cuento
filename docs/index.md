@@ -2,11 +2,16 @@
 
 Welcome to the documentation for **Cuento**, a modern roleplaying forum platform.
 
+## Our Policies
+
+- [Privacy Policy](privacy-policy.md)
+
 ## Architecture Decision Records (ADRs)
 
 - [ADR 001: Custom Fields and Their Types](adr/001-custom-fields.md)
 - [ADR 002: Character Factions](adr/002-factions.md)
 - [ADR 003: Permissions](adr/003-permissions.md)
+- [ADR 004: Event Bus](adr/004-event-bus.md)
 
 ## Project Overview
 
