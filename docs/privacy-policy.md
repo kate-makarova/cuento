@@ -1,10 +1,10 @@
-# Data & Privacy Policy: The Cuento Protocol
+# Data & Privacy Policy
 ## 1. Our Philosophy: Privacy by Design
    Cuento is built on a Zero-PII (Personally Identifiable Information) model. We believe you should be able to tell stories without leaving a digital footprint.
 
 * No Emails: We do not collect or store email addresses.
 
-* No Real Names: Your account is identified solely by a nickname.
+* No Real Data: Your account is identified solely by a nickname.
 
 * No Tracking: We do not use tracking cookies or sell user data.
 
