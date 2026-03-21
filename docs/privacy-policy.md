@@ -11,6 +11,9 @@
 ## 2. Public Content & Narrative Integrity
    This is a collaborative storytelling environment. To maintain the integrity and readability of the world for all players, public forum posts and character sheets are considered part of the shared narrative. By registering on any Cuento site, you grant the platform a perpetual license to retain and display your posts and character information to ensure story continuity, even after you leave the site.
 
+Warning! The posts in general topics will also be retained. While all posts written under the account name will become anonymized by design, the information you
+have shared in this topics, including your personal information, will stay publicly available on the site. 
+
 The Severance: Upon archival of your user account, we permanently destroy the technical link between your login credentials and your posts. Your username is replaced by a generic identifier (e.g., The_Nameless_One). Once this link is severed, the action is irreversible. We cannot "re-link" posts to a new account because the connection no longer exists in our database.
 
 ## 3. Private Messages: Total User Sovereignty
