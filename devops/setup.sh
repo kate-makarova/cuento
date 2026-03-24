@@ -83,7 +83,7 @@ After=network.target mariadb.service
 User=cuento
 Group=cuento
 WorkingDirectory=/var/www/backend
-ExecStart=/var/www/backend/cuento-server
+ExecStart=/var/www/backend
 Restart=always
 RestartSec=5
 Environment="GIN_MODE=release"
