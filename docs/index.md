@@ -1,5 +1,3 @@
-# Cuento Documentation
-
 Welcome to the documentation for **Cuento**, a modern roleplaying forum platform.
 
 ## Our Policies
