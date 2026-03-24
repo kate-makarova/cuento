@@ -1,1 +1,3 @@
 title: "Cuento"
+remote_theme: jekyll/minima
+source: docs
